@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>EZ Rentals - Car Rental Management System</title>
+    <!-- Include CSS and JavaScript files -->
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <script src="script.js"></script>
+</head>
+<body>
+    <!-- Header and Navigation Bar -->
+    <header>
+        <!-- Header content -->
+    </header>
+    <nav>
+        <!-- Navigation bar content -->
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="cars.html">View Cars</a></li>
+            <li><a href="search.html">Search Cars</a></li>
+            <li><a href="book.html">Book a Car</a></li>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="register.html">Register</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <h1>Search for a Car</h1>
+        <!-- Search form -->
+        <form onsubmit="searchCars(event)">
+            <input type="text" id="make" placeholder="Make">
+			<p></p>
+            <input type="text" id="model" placeholder="Model">
+			<p></p>
+            <input type="text" id="color" placeholder="Color">
+			<p></p>
+            <button type="submit">Search</button>
+        </form>
+        <!-- Display search results -->
+        <ul id="searchResults"></ul>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <!-- Footer content -->
+    </footer>
+
+    <!-- JavaScript code to handle car search -->
+    <script>
+        function searchCars(event) {
+            event.preventDefault();
+
+            // Retrieve search criteria
+            const make = document.getElementById('make').value;
+            const model = document.getElementById('model').value;
+            const color = document.getElementById('color').value;
+
+            // Perform search using AJAX request
+            fetch(`api/searchCars.php?make=${make}&model=${model}&color=${color}`)
+                .then(response => response.json())
+                .then(data => {
+                    const searchResults = document.getElementById('searchResults');
+                    searchResults.innerHTML = '';
+
+                    // Iterate through the search results and display car details
+                    data.forEach(car => {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = `Make: ${car.make}, Model: ${car.model}, Color: ${car.color}, Price per day: ${car.rentalPrice}`;
+                        searchResults.appendChild(listItem);
+                    });
+                })
+                .catch(error => console.error(error));
+        }
+    </script>
+</body>
+</html>

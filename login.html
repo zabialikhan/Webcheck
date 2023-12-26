@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>EZ Rentals - Car Rental Management System</title>
+    <!-- Include CSS and JavaScript files -->
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <script src="script.js"></script>
+</head>
+<body>
+    <!-- Header and Navigation Bar -->
+    <header>
+        <!-- Header content -->
+    </header>
+    <nav>
+        <!-- Navigation bar content -->
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="cars.html">View Cars</a></li>
+            <li><a href="search.html">Search Cars</a></li>
+            <li><a href="book.html">Book a Car</a></li>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="register.html">Register</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <h1>Login</h1>
+        <!-- Login form -->
+        <form onsubmit="login(event)">
+            <input type="text" id="username" placeholder="Username">
+            <input type="password" id="password" placeholder="Password">
+            <button type="submit">Login</button>
+        </form>
+        <p id="loginError"></p>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <!-- Footer content -->
+    </footer>
+
+    <!-- JavaScript code to handle login -->
+    <script>
+        function login(event) {
+            event.preventDefault();
+
+            // Retrieve login credentials
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Perform login using AJAX request
+            fetch('api/login.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: username,
+                    password: password
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Handle the login response
+                if (data.success) {
+                    // Redirect to dashboard or desired page
+                } else {
+                    const loginError = document.getElementById('loginError');
+                    loginError.textContent = 'Invalid username or password. Please try again.';
+                }
+            })
+            .catch(error => console.error(error));
+        }
+    </script>
+</body>
+</html>
